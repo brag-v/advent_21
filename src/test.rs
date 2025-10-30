@@ -38,7 +38,6 @@ fn test_day1_task1() {
     -> "7");
 }
 
-
 #[test]
 fn test_day1_task2() {
     assert_task!(day1::task2,
@@ -53,4 +52,28 @@ fn test_day1_task2() {
         "260",
         "263",
     -> "5");
+}
+
+#[test]
+fn test_day2_task1() {
+    assert_task!(day2::task1,
+        "forward 5",
+        "down 5",
+        "forward 8",
+        "up 3",
+        "down 8",
+        "forward 2",
+    -> "150");
+}
+
+#[test]
+fn test_day2_task2() {
+    assert_task!(day2::task2,
+        "forward 5",
+        "down 5",
+        "forward 8",
+        "up 3",
+        "down 8",
+        "forward 2",
+    -> "900");
 }

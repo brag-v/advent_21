@@ -11,6 +11,7 @@ use std::{
 mod test;
 
 mod day1;
+mod day2;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();
@@ -35,6 +36,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     let solver = match (day, task) {
         ("1", "1") => day1::task1,
         ("1", "2") => day1::task2,
+        ("2", "1") => day2::task1,
+        ("2", "2") => day2::task2,
         _ => return Err(format!("Day {day} task {task} is not implemented").into()),
     };
 
@@ -44,7 +47,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let runtime = start_time.elapsed();
 
     println!("{result}");
-    println!("Elapsed time: {:.3} ms", runtime.as_micros() as f64 * 1e-3);
+    println!("Elapsed time: {:.3} ms", runtime.as_secs_f64() * 1000.);
 
     Ok(())
 }
