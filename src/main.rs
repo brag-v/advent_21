@@ -12,6 +12,7 @@ mod test;
 
 mod day1;
 mod day2;
+mod day3;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();
@@ -38,6 +39,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         ("1", "2") => day1::task2,
         ("2", "1") => day2::task1,
         ("2", "2") => day2::task2,
+        ("3", "1") => day3::task1,
+        ("3", "2") => day3::task2,
         _ => return Err(format!("Day {day} task {task} is not implemented").into()),
     };
 
@@ -46,7 +49,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let result = solver(input);
     let runtime = start_time.elapsed();
 
-    println!("{result}");
+    println!("Result: {result}");
     println!("Elapsed time: {:.3} ms", runtime.as_secs_f64() * 1000.);
 
     Ok(())
