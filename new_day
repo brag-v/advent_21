@@ -1,0 +1,54 @@
+#!/bin/zsh
+
+if [[ $# -ne 1 ]]; then
+    echo "Usage: new_day <day_number>" >&2
+    exit 2
+fi
+
+if [[ ! $1 =~ "^[0-9]+$" && $1 -lt 25 && $1 -gt 0 ]]; then
+    echo "Day number must be a positive number less than or equal 24" >&2
+    exit 2
+fi
+
+path="src/day$1.rs"
+
+if [[ -e $path ]]; then
+	echo "Error: $path already exists" >&2
+	exit 2
+fi
+
+echo 'use std::fmt::Debug;
+
+pub fn task1<I, E>(input: I) -> String
+where
+    I: Iterator<Item = Result<String, E>>,
+    E: Debug,
+{
+    todo!("Task not implemented");
+}
+
+pub fn task2<I, E>(input: I) -> String
+where
+    I: Iterator<Item = Result<String, E>>,
+    E: Debug,
+{
+    todo!("Task not implemented");
+}' > $path
+
+echo "
+
+#[test]
+fn test_day$1_task1() {
+    assert_task!(day$1::task1,
+		\"TODO: example input\",
+    -> \"TODO: example output\");
+}
+
+#[test]
+fn test_day$1_task2() {
+    assert_task!(day$1::task2,
+		\"TODO: example input\",
+    -> \"TODO: example output\");
+}
+" >> 'src/test.rs'
+
