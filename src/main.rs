@@ -13,6 +13,7 @@ mod test;
 mod day1;
 mod day2;
 mod day3;
+mod day4;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();
@@ -41,6 +42,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         ("2", "2") => day2::task2,
         ("3", "1") => day3::task1,
         ("3", "2") => day3::task2,
+        ("4", "1") => day4::task1,
+        ("4", "2") => day4::task2,
         _ => return Err(format!("Day {day} task {task} is not implemented").into()),
     };
 
