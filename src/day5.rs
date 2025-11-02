@@ -1,4 +1,7 @@
-use std::{cmp::max, fmt::Debug};
+use std::{
+    cmp::{Ordering, max},
+    fmt::Debug,
+};
 
 #[derive(Debug)]
 struct Coord {
@@ -21,20 +24,15 @@ impl Line {
         let length =
             (self.start.x.abs_diff(self.end.x) + 1).max(self.start.y.abs_diff(self.end.y) + 1);
 
-        let x_vec: Vec<usize> = if self.start.x > self.end.x {
-            (self.end.x..=self.start.x).rev().collect()
-        } else if self.start.x == self.end.x {
-            vec![self.start.x; length]
-        } else {
-            (self.start.x..=self.end.x).collect()
+        let x_vec: Vec<usize> = match self.start.x.cmp(&self.end.x) {
+            Ordering::Less => (self.start.x..=self.end.x).collect(),
+            Ordering::Equal => vec![self.start.x; length],
+            Ordering::Greater => (self.end.x..=self.start.x).rev().collect(),
         };
-
-        let y_vec: Vec<usize> = if self.start.y > self.end.y {
-            (self.end.y..=self.start.y).rev().collect()
-        } else if self.start.y == self.end.y {
-            vec![self.start.y; length]
-        } else {
-            (self.start.y..=self.end.y).collect()
+        let y_vec: Vec<usize> = match self.start.y.cmp(&self.end.y) {
+            Ordering::Less => (self.start.y..=self.end.y).collect(),
+            Ordering::Equal => vec![self.start.y; length],
+            Ordering::Greater => (self.end.y..=self.start.y).rev().collect(),
         };
 
         x_vec
@@ -46,7 +44,7 @@ impl Line {
 }
 
 fn parse_coords(coords: &str) -> Coord {
-    let (x, y) = coords.split_once(",").unwrap();
+    let (x, y) = coords.split_once(',').unwrap();
     Coord {
         x: x.parse().unwrap(),
         y: y.parse().unwrap(),
@@ -94,18 +92,19 @@ fn count_overlaps(map: &[Vec<u8>]) -> usize {
         .sum()
 }
 
-
 pub fn task1<I, E>(input: I) -> String
 where
     I: Iterator<Item = Result<String, E>>,
     E: Debug,
 {
     let lines: Vec<Line> = get_coords(input.map(|line| line.unwrap()))
-        .filter(|line| line.is_straight())
+        .filter(Line::is_straight)
         .collect();
     let (width, height) = find_map_dimention(&lines);
     let mut map: Vec<Vec<u8>> = vec![vec![0; width]; height];
-    lines.iter().for_each(|line| update_map(&mut map, line));
+    for line in lines {
+        update_map(&mut map, &line);
+    }
     count_overlaps(&map).to_string()
 }
 
@@ -117,6 +116,8 @@ where
     let lines: Vec<Line> = get_coords(input.map(|line| line.unwrap())).collect();
     let (width, height) = find_map_dimention(&lines);
     let mut map: Vec<Vec<u8>> = vec![vec![0; width]; height];
-    lines.iter().for_each(|line| update_map(&mut map, line));
+    for line in lines {
+        update_map(&mut map, &line);
+    }
     count_overlaps(&map).to_string()
 }

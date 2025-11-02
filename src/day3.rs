@@ -29,7 +29,7 @@ where
     let number_lengths = counts.len();
     let gamma_rate: u64 = counts
         .into_iter()
-        .map(|count| if count > cutoff { 1 } else { 0 })
+        .map(|count| u64::from(count > cutoff))
         .fold(0, |acc, bit| acc * 2 + bit);
     let epsilon_rate = ((!gamma_rate) << (64 - number_lengths)) >> (64 - number_lengths);
     let power_consuption = gamma_rate * epsilon_rate;
@@ -39,13 +39,13 @@ where
 fn sort_list(measurements: Vec<&[u8]>, index: usize) -> (Vec<&[u8]>, Vec<&[u8]>) {
     let mut ones = Vec::new();
     let mut zeros = Vec::new();
-    measurements.iter().for_each(|measurement| {
+    for measurement in measurements {
         if measurement[index] == b'1' {
-            ones.push(*measurement);
+            ones.push(measurement);
         } else {
-            zeros.push(*measurement);
+            zeros.push(measurement);
         }
-    });
+    }
     (zeros, ones)
 }
 
@@ -64,7 +64,7 @@ fn find_rating(mut measurements: Vec<&[u8]>, keep_small: bool) -> u64 {
     }
     measurements[0]
         .iter()
-        .fold(0, |acc, bit| acc * 2 + { if *bit == b'1' { 1 } else { 0 } })
+        .fold(0, |acc, bit| acc * 2 + u64::from(*bit == b'1'))
 }
 
 pub fn task2<I, E>(input: I) -> String

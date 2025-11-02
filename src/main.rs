@@ -24,14 +24,11 @@ fn main() -> Result<(), Box<dyn Error>> {
         return Err("Please provide a task to solve".into());
     }
 
-    let (day, task) = match args[1].split_once(".") {
-        Some(parsed) => parsed,
-        None => {
-            return Err("Please provide a task in the format <day number>.<task number>".into());
-        }
+    let Some((day, task)) = args[1].split_once('.') else {
+        return Err("Please provide a task in the format <day number>.<task number>".into());
     };
 
-    let path = format!("./data/day{}.txt", day);
+    let path = format!("./data/day{day}.txt");
 
     let input = read_lines(&path)?;
 

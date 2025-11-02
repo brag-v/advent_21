@@ -18,7 +18,7 @@ where
         .next()
         .unwrap()
         .unwrap()
-        .split(",")
+        .split(',')
         .map(|num| num.parse().unwrap())
         .collect();
 
@@ -75,11 +75,11 @@ fn calculate_board_score(board: &Board, number: u8) -> u64 {
             row.iter()
                 .enumerate()
                 .filter(|(x, _num)| !board.marks[y][*x])
-                .map(|(_x, num)| *num as u64)
+                .map(|(_x, num)| u64::from(*num))
                 .sum::<u64>()
         })
         .sum::<u64>()
-        * (number as u64)
+        * u64::from(number)
 }
 
 pub fn task1<I, E>(input: I) -> String
