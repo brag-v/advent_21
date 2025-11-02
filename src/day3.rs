@@ -1,5 +1,6 @@
 use std::fmt::Debug;
 
+/// Finds the total number of 1s by position in the input, as well as the length of the input
 fn count_numbers<I>(input: I) -> (Vec<u32>, u32)
 where
     I: Iterator<Item = String>,
@@ -36,7 +37,10 @@ where
     power_consuption.to_string()
 }
 
-fn sort_list(measurements: Vec<&[u8]>, index: usize) -> (Vec<&[u8]>, Vec<&[u8]>) {
+/// Split list into two using the number at index.
+/// The lists with a 1 at index is the first element returned,
+/// the list with a 0 at index is the second
+fn split_list(measurements: Vec<&[u8]>, index: usize) -> (Vec<&[u8]>, Vec<&[u8]>) {
     let mut ones = Vec::new();
     let mut zeros = Vec::new();
     for measurement in measurements {
@@ -49,14 +53,15 @@ fn sort_list(measurements: Vec<&[u8]>, index: usize) -> (Vec<&[u8]>, Vec<&[u8]>)
     (zeros, ones)
 }
 
-fn find_rating(mut measurements: Vec<&[u8]>, keep_small: bool) -> u64 {
-    let measurement_length = measurements[0].len();
-    for index in 1..measurement_length {
-        let (zeros, ones) = sort_list(measurements, index);
-        measurements = if (zeros.len() > ones.len()) ^ keep_small {
-            zeros
+/// Finds the rating of the measurements by repeatedly applying the keep majority/minority rule to
+/// each index until there is only one measurement left.
+fn find_rating(mut measurements: Vec<&[u8]>, keep_majority: bool) -> u64 {
+    for index in 1..measurements[0].len() {
+        let (zeros, ones) = split_list(measurements, index);
+        if (zeros.len() > ones.len()) ^ !keep_majority {
+            measurements = zeros
         } else {
-            ones
+            measurements = ones
         };
         if measurements.len() == 1 {
             break;
@@ -74,15 +79,15 @@ where
 {
     let binding: Vec<String> = input.map(|line| line.unwrap()).collect();
     let measurements: Vec<&[u8]> = binding.iter().map(|line| line.as_bytes()).collect();
-    let (zeros, ones) = sort_list(measurements, 0);
-    let (big, small) = if zeros.len() > ones.len() {
+    let (zeros, ones) = split_list(measurements, 0);
+    let (majority, minority) = if zeros.len() > ones.len() {
         (zeros, ones)
     } else {
         (ones, zeros)
     };
 
-    let oxygen_generator_rating: u64 = find_rating(big, false);
-    let co2_scrubber_rating: u64 = find_rating(small, true);
+    let oxygen_generator_rating: u64 = find_rating(majority, true);
+    let co2_scrubber_rating: u64 = find_rating(minority, false);
 
     (oxygen_generator_rating * co2_scrubber_rating).to_string()
 }

@@ -16,10 +16,13 @@ struct Line {
 }
 
 impl Line {
+    /// Check if line is perfectly vertical or horizontal
     fn is_straight(&self) -> bool {
         self.start.x == self.end.x || self.start.y == self.end.y
     }
 
+    /// Returns the ordered coordinates on the line.
+    /// Line must be vertical, horizontal, or 45 degrees
     fn interpolate(&self) -> Vec<Coord> {
         let length =
             (self.start.x.abs_diff(self.end.x) + 1).max(self.start.y.abs_diff(self.end.y) + 1);

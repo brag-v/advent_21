@@ -8,9 +8,9 @@ where
     let mut x: i32 = 0;
     let mut y: i32 = 0;
     for line in input.map(|line| line.unwrap()) {
-        let (dir, num) = line.split_once(' ').unwrap();
+        let (direction, num) = line.split_once(' ').unwrap();
         let num: i32 = num.parse().unwrap();
-        match dir.chars().next() {
+        match direction.chars().next() {
             Some('f') => x += num,
             Some('u') => y -= num,
             Some('d') => y += num,
@@ -30,9 +30,9 @@ where
     let mut y: i32 = 0;
     let mut aim: i32 = 0;
     for line in input.map(|line| line.unwrap()) {
-        let (dir, num) = line.split_once(' ').unwrap();
+        let (direction, num) = line.split_once(' ').unwrap();
         let num: i32 = num.parse().unwrap();
-        match dir.chars().next() {
+        match direction.chars().next() {
             Some('f') => {
                 x += num;
                 y += num * aim;
