@@ -1,7 +1,4 @@
-use std::{
-    cmp::{Ordering, max},
-    fmt::Debug,
-};
+use std::{cmp::Ordering, fmt::Debug};
 
 #[derive(Debug)]
 struct Coord {
@@ -73,13 +70,13 @@ where
 fn find_map_dimention(lines: &[Line]) -> (usize, usize) {
     let height = lines
         .iter()
-        .map(|line| max(line.start.y, line.end.y))
+        .map(|line| line.start.y.max(line.end.y))
         .max()
         .unwrap()
         + 1;
     let width = lines
         .iter()
-        .map(|line| max(line.start.x, line.end.x))
+        .map(|line| line.start.x.max(line.end.x))
         .max()
         .unwrap()
         + 1;

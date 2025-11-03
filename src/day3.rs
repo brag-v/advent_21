@@ -59,10 +59,10 @@ fn find_rating(mut measurements: Vec<&[u8]>, keep_majority: bool) -> u64 {
     for index in 1..measurements[0].len() {
         let (zeros, ones) = split_list(measurements, index);
         if (zeros.len() > ones.len()) ^ !keep_majority {
-            measurements = zeros
+            measurements = zeros;
         } else {
-            measurements = ones
-        };
+            measurements = ones;
+        }
         if measurements.len() == 1 {
             break;
         }
