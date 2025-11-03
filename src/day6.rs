@@ -8,6 +8,8 @@ fn to_index(counter: usize, time: usize) -> usize {
 }
 
 fn total_number_of_fish(counter: usize, time: usize, memo: &mut [Option<u64>]) -> u64 {
+    // TODO: total_number_of_fish(0, time) == total_number_of_fish(n, time + n)
+    // this should be exploited by the memo and the function
     if time == 0 {
         return 1;
     }
