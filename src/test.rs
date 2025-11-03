@@ -164,7 +164,6 @@ fn test_day4_task2() {
     -> "1924");
 }
 
-
 #[test]
 fn test_day5_task1() {
     assert_task!(day5::task1,
@@ -197,8 +196,6 @@ fn test_day5_task2() {
     -> "12");
 }
 
-
-
 #[test]
 fn test_day6_task1() {
     assert_task!(day6::task1,
@@ -213,3 +210,16 @@ fn test_day6_task2() {
     -> "26984457539");
 }
 
+#[test]
+fn test_day7_task1() {
+    assert_task!(day7::task1,
+		"16,1,2,0,4,2,7,1,2,14",
+    -> "37");
+}
+
+#[test]
+fn test_day7_task2() {
+    assert_task!(day7::task2,
+		"16,1,2,0,4,2,7,1,2,14",
+    -> "168");
+}
