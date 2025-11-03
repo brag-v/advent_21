@@ -9,6 +9,16 @@ struct Coord {
     y: usize,
 }
 
+impl From<&str> for Coord {
+    fn from(value: &str) -> Coord {
+        let (x, y) = value.split_once(',').unwrap();
+        Coord {
+            x: x.parse().unwrap(),
+            y: y.parse().unwrap(),
+        }
+    }
+}
+
 #[derive(Debug)]
 struct Line {
     start: Coord,
@@ -46,27 +56,20 @@ impl Line {
     }
 }
 
-fn parse_coords(coords: &str) -> Coord {
-    let (x, y) = coords.split_once(',').unwrap();
-    Coord {
-        x: x.parse().unwrap(),
-        y: y.parse().unwrap(),
-    }
-}
-
-fn get_coords<I>(input: I) -> impl Iterator<Item = Line>
+fn get_lines<I>(input: I) -> impl Iterator<Item = Line>
 where
     I: Iterator<Item = String>,
 {
     input.map(|line| {
         let (lhs, rhs) = line.split_once(" -> ").unwrap();
         Line {
-            start: parse_coords(lhs),
-            end: parse_coords(rhs),
+            start: Coord::from(lhs),
+            end: Coord::from(rhs),
         }
     })
 }
 
+/// Finds the minimum map dimentions based on line endpoint coords
 fn find_map_dimention(lines: &[Line]) -> (usize, usize) {
     let height = lines
         .iter()
@@ -91,8 +94,8 @@ fn update_map(map: &mut [Vec<u8>], straight_line: &Line) {
 
 fn count_overlaps(map: &[Vec<u8>]) -> usize {
     map.iter()
-        .map(|row| row.iter().filter(|line_count| **line_count > 1).count())
-        .sum()
+        .flat_map(|row| row.iter().filter(|line_count| **line_count > 1))
+        .count()
 }
 
 pub fn task1<I, E>(input: I) -> String
@@ -100,7 +103,7 @@ where
     I: Iterator<Item = Result<String, E>>,
     E: Debug,
 {
-    let lines: Vec<Line> = get_coords(input.map(|line| line.unwrap()))
+    let lines: Vec<Line> = get_lines(input.map(|line| line.unwrap()))
         .filter(Line::is_straight)
         .collect();
     let (width, height) = find_map_dimention(&lines);
@@ -116,7 +119,7 @@ where
     I: Iterator<Item = Result<String, E>>,
     E: Debug,
 {
-    let lines: Vec<Line> = get_coords(input.map(|line| line.unwrap())).collect();
+    let lines: Vec<Line> = get_lines(input.map(|line| line.unwrap())).collect();
     let (width, height) = find_map_dimention(&lines);
     let mut map: Vec<Vec<u8>> = vec![vec![0; width]; height];
     for line in lines {
