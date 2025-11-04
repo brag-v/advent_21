@@ -255,3 +255,23 @@ fn test_day8_task2() {
         "gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce",
     -> "61229");
 }
+
+
+#[test]
+fn test_day9_task1() {
+    assert_task!(day9::task1,
+        "2199943210",
+        "3987894921",
+        "9856789892",
+        "8767896789",
+        "9899965678",
+    -> "15");
+}
+
+#[test]
+fn test_day9_task2() {
+    assert_task!(day9::task2,
+		"TODO: example input",
+    -> "TODO: example output");
+}
+
