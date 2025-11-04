@@ -271,7 +271,11 @@ fn test_day9_task1() {
 #[test]
 fn test_day9_task2() {
     assert_task!(day9::task2,
-		"TODO: example input",
-    -> "TODO: example output");
+        "2199943210",
+        "3987894921",
+        "9856789892",
+        "8767896789",
+        "9899965678",
+    -> "1134");
 }
 
