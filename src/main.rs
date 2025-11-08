@@ -10,6 +10,8 @@ use std::{
 #[cfg(test)]
 mod test;
 
+mod grid;
+
 mod day1;
 mod day2;
 mod day3;
@@ -20,6 +22,7 @@ mod day7;
 mod day8;
 mod day9;
 mod day10;
+mod day11;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();
@@ -59,6 +62,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         ("9", "2") => day9::task2,
         ("10", "1") => day10::task1,
         ("10", "2") => day10::task2,
+        ("11", "1") => day11::task1,
+        ("11", "2") => day11::task2,
         _ => return Err(format!("Day {day} task {task} is not implemented").into()),
     };
 
