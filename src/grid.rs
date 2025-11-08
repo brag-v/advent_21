@@ -5,6 +5,7 @@ pub struct Coord {
 }
 
 impl Coord {
+    /// return a list of adjecent coordinates within the bounds (0..width) and (0..height)
     pub fn adjacent(&self, width_bound: usize, height_bound: usize) -> Vec<Coord> {
         let mut a = Vec::with_capacity(4);
         if self.x > 0 {

@@ -1,11 +1,8 @@
 use std::{cmp::Ordering, fmt::Debug};
+use crate::grid::Coord;
 
-#[derive(Debug)]
-struct Coord {
-    x: usize,
-    y: usize,
-}
 
+// TODO: make this api better and put it in grid.rs
 impl From<&str> for Coord {
     fn from(value: &str) -> Coord {
         let (x, y) = value.split_once(',').unwrap();
