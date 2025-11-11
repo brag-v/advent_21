@@ -256,7 +256,6 @@ fn test_day8_task2() {
     -> "61229");
 }
 
-
 #[test]
 fn test_day9_task1() {
     assert_task!(day9::task1,
@@ -278,8 +277,6 @@ fn test_day9_task2() {
         "9899965678",
     -> "1134");
 }
-
-
 
 #[test]
 fn test_day10_task1() {
@@ -313,8 +310,6 @@ fn test_day10_task2() {
     -> "288957");
 }
 
-
-
 #[test]
 fn test_day11_task1() {
     assert_task!(day11::task1,
@@ -347,3 +342,96 @@ fn test_day11_task2() {
     -> "195");
 }
 
+#[test]
+fn test_day12_task1() {
+    assert_task!(day12::task1,
+        "start-A",
+        "start-b",
+        "A-c",
+        "A-b",
+        "b-d",
+        "A-end",
+        "b-end",
+    -> "10");
+
+    assert_task!(day12::task1,
+        "dc-end",
+        "HN-start",
+        "start-kj",
+        "dc-start",
+        "dc-HN",
+        "LN-dc",
+        "HN-end",
+        "kj-sa",
+        "kj-HN",
+        "kj-dc",
+    -> "19");
+
+    assert_task!(day12::task1,
+        "fs-end",
+        "he-DX",
+        "fs-he",
+        "start-DX",
+        "pj-DX",
+        "end-zg",
+        "zg-sl",
+        "zg-pj",
+        "pj-he",
+        "RW-he",
+        "fs-DX",
+        "pj-RW",
+        "zg-RW",
+        "start-pj",
+        "he-WI",
+        "zg-he",
+        "pj-fs",
+        "start-RW",
+    -> "226");
+}
+
+#[test]
+fn test_day12_task2() {
+    assert_task!(day12::task2,
+        "start-A",
+        "start-b",
+        "A-c",
+        "A-b",
+        "b-d",
+        "A-end",
+        "b-end",
+    -> "36");
+
+    assert_task!(day12::task2,
+        "dc-end",
+        "HN-start",
+        "start-kj",
+        "dc-start",
+        "dc-HN",
+        "LN-dc",
+        "HN-end",
+        "kj-sa",
+        "kj-HN",
+        "kj-dc",
+    -> "103");
+
+    assert_task!(day12::task2,
+        "fs-end",
+        "he-DX",
+        "fs-he",
+        "start-DX",
+        "pj-DX",
+        "end-zg",
+        "zg-sl",
+        "zg-pj",
+        "pj-he",
+        "RW-he",
+        "fs-DX",
+        "pj-RW",
+        "zg-RW",
+        "start-pj",
+        "he-WI",
+        "zg-he",
+        "pj-fs",
+        "start-RW",
+    -> "3509");
+}
