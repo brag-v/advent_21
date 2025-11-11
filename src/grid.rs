@@ -1,4 +1,4 @@
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Coord {
     pub x: usize,
     pub y: usize,
@@ -86,6 +86,17 @@ impl Coord {
             });
         }
         a
+    }
+}
+
+// TODO: turn into try from ?
+impl From<&str> for Coord {
+    fn from(value: &str) -> Coord {
+        let (x, y) = value.split_once(',').unwrap();
+        Coord {
+            x: x.parse().unwrap(),
+            y: y.parse().unwrap(),
+        }
     }
 }
 

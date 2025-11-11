@@ -12,7 +12,7 @@ macro_rules! evaluate_task {
 }
 
 macro_rules! assert_task {
-    ($task:path,$($line:literal,)* -> $expected:literal) => {{
+    ($task:path,$($line:literal,)* -> $expected:expr) => {{
         let solution = evaluate_task!($task, $($line,)+);
         assert_eq!(solution, $expected.to_string());
     }};
@@ -434,4 +434,67 @@ fn test_day12_task2() {
         "pj-fs",
         "start-RW",
     -> "3509");
+}
+
+#[test]
+fn test_day13_task1() {
+    assert_task!(day13::task1,
+        "6,10",
+        "0,14",
+        "9,10",
+        "0,3",
+        "10,4",
+        "4,11",
+        "6,0",
+        "6,12",
+        "4,1",
+        "0,13",
+        "10,12",
+        "3,4",
+        "3,0",
+        "8,4",
+        "1,10",
+        "2,14",
+        "8,10",
+        "9,0",
+        "",
+        "fold along y=7",
+        "fold along x=5",
+    -> "17");
+}
+
+#[test]
+fn test_day13_task2() {
+    assert_task!(day13::task2,
+        "6,10",
+        "0,14",
+        "9,10",
+        "0,3",
+        "10,4",
+        "4,11",
+        "6,0",
+        "6,12",
+        "4,1",
+        "0,13",
+        "10,12",
+        "3,4",
+        "3,0",
+        "8,4",
+        "1,10",
+        "2,14",
+        "8,10",
+        "9,0",
+        "",
+        "fold along y=7",
+        "fold along x=5",
+    -> [
+            "#####",
+            "#...#",
+            "#...#",
+            "#...#",
+            "#####",
+            ".....",
+            "....."
+        ].join("\n")
+    )
 }

@@ -1,18 +1,6 @@
 use std::{cmp::Ordering, fmt::Debug};
 use crate::grid::Coord;
 
-
-// TODO: make this api better and put it in grid.rs
-impl From<&str> for Coord {
-    fn from(value: &str) -> Coord {
-        let (x, y) = value.split_once(',').unwrap();
-        Coord {
-            x: x.parse().unwrap(),
-            y: y.parse().unwrap(),
-        }
-    }
-}
-
 #[derive(Debug)]
 struct Line {
     start: Coord,
