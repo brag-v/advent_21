@@ -1,15 +1,9 @@
-use std::fmt::Debug;
-
 /// Finds the total number of 1s by position in the input, as well as the length of the input
-fn count_numbers<I>(input: I) -> (Vec<u32>, u32)
-where
-    I: Iterator<Item = String>,
-{
-    let mut peekable_input = input.peekable();
-    let measure_length = peekable_input.peek().as_ref().unwrap().len();
+fn count_numbers(input: String) -> (Vec<u32>, u32) {
+    let measure_length = input.lines().next().unwrap().len();
     let mut counts = vec![0; measure_length];
     let mut length = 0;
-    for line in peekable_input {
+    for line in input.lines() {
         for (i, bit) in line.chars().enumerate() {
             if bit == '1' {
                 counts[i] += 1;
@@ -20,12 +14,8 @@ where
     (counts, length)
 }
 
-pub fn task1<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
-    let (counts, length) = count_numbers(input.map(|line| line.unwrap()));
+pub fn task1(input: String) -> String {
+    let (counts, length) = count_numbers(input);
     let cutoff = length / 2;
     let number_lengths = counts.len();
     let gamma_rate: u64 = counts
@@ -72,13 +62,8 @@ fn find_rating(mut measurements: Vec<&[u8]>, keep_majority: bool) -> u64 {
         .fold(0, |acc, bit| acc * 2 + u64::from(*bit == b'1'))
 }
 
-pub fn task2<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
-    let binding: Vec<String> = input.map(|line| line.unwrap()).collect();
-    let measurements: Vec<&[u8]> = binding.iter().map(|line| line.as_bytes()).collect();
+pub fn task2(input: String) -> String {
+    let measurements: Vec<&[u8]> = input.lines().map(|line| line.as_bytes()).collect();
     let (zeros, ones) = split_list(measurements, 0);
     let (majority, minority) = if zeros.len() > ones.len() {
         (zeros, ones)

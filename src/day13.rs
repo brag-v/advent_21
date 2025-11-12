@@ -1,5 +1,5 @@
 use crate::grid::Coord;
-use std::{cmp::Ordering, fmt::Debug, usize};
+use std::{cmp::Ordering, fmt::Debug};
 
 #[derive(Debug)]
 enum Orientation {
@@ -52,16 +52,7 @@ fn fold_coord(fold: &Fold, coord: &mut Coord) {
     }
 }
 
-pub fn task1<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
-    let input = input
-        .map(|line| line.unwrap())
-        .fold(String::new(), |acc, line| acc + &line + "\n")
-        .trim_end()
-        .to_owned();
+pub fn task1(input: String) -> String {
     let (mut coords, folds) = get_coords_and_folds(&input);
 
     for coord in coords.iter_mut() {
@@ -77,20 +68,12 @@ where
     coords.len().to_string()
 }
 
-pub fn task2<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
-    let input = input
-        .map(|line| line.unwrap())
-        .fold(String::new(), |acc, line| acc + &line + "\n")
-        .trim_end()
-        .to_owned();
+pub fn task2(input: String) -> String {
     let (mut coords, folds) = get_coords_and_folds(&input);
 
     let mut width = usize::MAX;
     let mut height = usize::MAX;
+    // TODO: remove duplicates during folding?
     for fold in folds {
         for coord in coords.iter_mut() {
             fold_coord(&fold, coord);

@@ -1,13 +1,8 @@
-use std::fmt::Debug;
-
-pub fn task1<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
+pub fn task1(input: String) -> String
 {
     let mut x: i32 = 0;
     let mut y: i32 = 0;
-    for line in input.map(|line| line.unwrap()) {
+    for line in input.lines() {
         let (direction, num) = line.split_once(' ').unwrap();
         let num: i32 = num.parse().unwrap();
         match direction.chars().next() {
@@ -21,15 +16,12 @@ where
     (x.abs() * y.abs()).to_string()
 }
 
-pub fn task2<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
+pub fn task2(input: String) -> String
 {
     let mut x: i32 = 0;
     let mut y: i32 = 0;
     let mut aim: i32 = 0;
-    for line in input.map(|line| line.unwrap()) {
+    for line in input.lines() {
         let (direction, num) = line.split_once(' ').unwrap();
         let num: i32 = num.parse().unwrap();
         match direction.chars().next() {

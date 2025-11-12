@@ -1,18 +1,7 @@
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
-use std::fmt::Debug;
 
-pub fn task1<I, E>(mut input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
-    let positions: Vec<u32> = input
-        .next()
-        .unwrap()
-        .unwrap()
-        .split(',')
-        .map(|num| num.parse().unwrap())
-        .collect();
+pub fn task1(input: String) -> String {
+    let positions: Vec<u32> = input.split(',').map(|num| num.parse().unwrap()).collect();
 
     // minimum position will be at one of the crab's positions
     let min_fuel: u32 = positions
@@ -28,18 +17,8 @@ fn triangle_num(n: u32) -> u32 {
     n * (n + 1) / 2
 }
 
-pub fn task2<I, E>(mut input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
-    let positions: Vec<u32> = input
-        .next()
-        .unwrap()
-        .unwrap()
-        .split(',')
-        .map(|num| num.parse().unwrap())
-        .collect();
+pub fn task2(input: String) -> String {
+    let positions: Vec<u32> = input.split(',').map(|num| num.parse().unwrap()).collect();
     let start = positions.iter().min().unwrap();
     let end = positions.iter().max().unwrap();
 

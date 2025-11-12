@@ -1,5 +1,5 @@
-use std::{cmp::Ordering, fmt::Debug};
 use crate::grid::Coord;
+use std::{cmp::Ordering, fmt::Debug};
 
 #[derive(Debug)]
 struct Line {
@@ -38,11 +38,8 @@ impl Line {
     }
 }
 
-fn get_lines<I>(input: I) -> impl Iterator<Item = Line>
-where
-    I: Iterator<Item = String>,
-{
-    input.map(|line| {
+fn get_lines(input: &str) -> impl Iterator<Item = Line> {
+    input.lines().map(|line| {
         let (lhs, rhs) = line.split_once(" -> ").unwrap();
         Line {
             start: Coord::from(lhs),
@@ -80,14 +77,8 @@ fn count_overlaps(map: &[Vec<u8>]) -> usize {
         .count()
 }
 
-pub fn task1<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
-    let lines: Vec<Line> = get_lines(input.map(|line| line.unwrap()))
-        .filter(Line::is_straight)
-        .collect();
+pub fn task1(input: String) -> String {
+    let lines: Vec<Line> = get_lines(&input).filter(Line::is_straight).collect();
     let (width, height) = find_map_dimention(&lines);
     let mut map: Vec<Vec<u8>> = vec![vec![0; width]; height];
     for line in lines {
@@ -96,12 +87,8 @@ where
     count_overlaps(&map).to_string()
 }
 
-pub fn task2<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
-    let lines: Vec<Line> = get_lines(input.map(|line| line.unwrap())).collect();
+pub fn task2(input: String) -> String {
+    let lines: Vec<Line> = get_lines(&input).collect();
     let (width, height) = find_map_dimention(&lines);
     let mut map: Vec<Vec<u8>> = vec![vec![0; width]; height];
     for line in lines {

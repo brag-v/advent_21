@@ -1,5 +1,3 @@
-use std::fmt::Debug;
-
 use crate::grid::Coord;
 
 #[derive(Clone, Copy)]
@@ -8,15 +6,11 @@ enum Octopus {
     Flashing,
 }
 
-fn parse_map<I, E>(input: I) -> Vec<Vec<Octopus>>
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
+fn parse_map(input: String) -> Vec<Vec<Octopus>> {
     input
+        .lines()
         .map(|line| {
-            line.unwrap()
-                .chars()
+            line.chars()
                 .map(|counter| Octopus::Charging(counter as u8 - b'0'))
                 .collect()
         })
@@ -57,11 +51,7 @@ fn time_step(map: &mut [Vec<Octopus>]) -> u64 {
     flash_count
 }
 
-pub fn task1<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
+pub fn task1(input: String) -> String {
     let mut map = parse_map(input);
     let mut flash_count = 0;
     for _time_step in 0..100 {
@@ -70,11 +60,7 @@ where
     flash_count.to_string()
 }
 
-pub fn task2<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
+pub fn task2(input: String) -> String {
     let mut map = parse_map(input);
     let desired_flash_count = (map.len() * map[0].len()) as u64;
     let mut i = 0;

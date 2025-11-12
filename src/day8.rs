@@ -1,14 +1,8 @@
-use std::fmt::Debug;
-
-fn parse_input<I, E>(input: I) -> Vec<(Vec<String>, Vec<String>)>
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
+fn parse_input(input: &str) -> Vec<(Vec<String>, Vec<String>)> {
     input
+        .lines()
         .map(|line| {
-            let binding = line.unwrap();
-            let (signal, output) = binding.split_once(" | ").unwrap();
+            let (signal, output) = line.split_once(" | ").unwrap();
             (
                 signal.split(' ').map(|s| s.to_string()).collect(),
                 output.split(' ').map(|s| s.to_string()).collect(),
@@ -24,12 +18,8 @@ fn count_identifiable_digits(signal: &[String]) -> usize {
         .count()
 }
 
-pub fn task1<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
-    let entries = parse_input(input);
+pub fn task1(input: String) -> String {
+    let entries = parse_input(&input);
     entries
         .iter()
         .map(|(_signal, output)| count_identifiable_digits(output))
@@ -139,12 +129,8 @@ fn gather_identifiable_digits<'a>(
     (one, seven, four)
 }
 
-pub fn task2<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
-    let entries = parse_input(input);
+pub fn task2(input: String) -> String {
+    let entries = parse_input(&input);
     let mut sum = 0;
     for (signal, output) in entries {
         let (one, seven, four) = gather_identifiable_digits(&signal, &output);

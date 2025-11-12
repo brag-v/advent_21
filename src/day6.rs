@@ -1,5 +1,3 @@
-use std::fmt::Debug;
-
 const NEW_FISH_COUNTER: usize = 8;
 const RESET_CONTER: usize = 6;
 
@@ -27,16 +25,10 @@ fn total_number_of_fish(counter: usize, time: usize, memo: &mut [Option<u64>]) -
     count
 }
 
-fn solve_tasks<I, E>(mut input: I, time: usize) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
+fn solve_tasks(input: &str, time: usize) -> String
 {
     let mut memo = vec![None; NEW_FISH_COUNTER * time];
     input
-        .next()
-        .unwrap()
-        .unwrap()
         .split(',')
         .map(|num| num.parse().unwrap())
         .map(|num| total_number_of_fish(num, time, &mut memo))
@@ -44,18 +36,12 @@ where
         .to_string()
 }
 
-pub fn task1<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
+pub fn task1(input: String) -> String
 {
-    solve_tasks(input, 80)
+    solve_tasks(&input, 80)
 }
 
-pub fn task2<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
+pub fn task2(input: String) -> String
 {
-    solve_tasks(input, 256)
+    solve_tasks(&input, 256)
 }

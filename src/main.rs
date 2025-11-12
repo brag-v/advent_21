@@ -1,11 +1,4 @@
-use std::{
-    env,
-    error::Error,
-    fs::File,
-    io::{self, BufRead},
-    path::Path,
-    time::Instant,
-};
+use std::{env, error::Error, fs::read_to_string, time::Instant};
 
 #[cfg(test)]
 mod test;
@@ -13,6 +6,10 @@ mod test;
 mod grid;
 
 mod day1;
+mod day10;
+mod day11;
+mod day12;
+mod day13;
 mod day2;
 mod day3;
 mod day4;
@@ -21,10 +18,6 @@ mod day6;
 mod day7;
 mod day8;
 mod day9;
-mod day10;
-mod day11;
-mod day12;
-mod day13;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();
@@ -40,7 +33,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let path = format!("./data/day{day}.txt");
 
-    let input = read_lines(&path)?;
+    let input = read_to_string(path)?;
 
     // Select solver for the provided task
     let solver = match (day, task) {
@@ -79,7 +72,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let runtime = start_time.elapsed();
 
     if result.contains("\n") {
-        // if result is multiline, we might not want 
+        // if result is multiline, we might not want
         // the shift on the first line from "Result: "
         println!("Result:\n{result}");
     } else {
@@ -88,14 +81,4 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("Elapsed time: {:.3} ms", runtime.as_secs_f64() * 1000.);
 
     Ok(())
-}
-
-// The output is wrapped in a Result to allow matching on errors.
-// Returns an Iterator to the Reader of the lines of the file.
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<Path>,
-{
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
 }

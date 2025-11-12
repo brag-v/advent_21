@@ -13,9 +13,9 @@ fn is_big_cave(cave_id: &str) -> bool {
     cave_id.chars().next().is_some_and(char::is_uppercase)
 }
 
-fn parse_cave_system(input: &[String]) -> HashMap<&str, Cave<'_>> {
+fn parse_cave_system(input: &str) -> HashMap<&str, Cave<'_>> {
     let mut caves = HashMap::new();
-    for (left_id, right_id) in input.iter().map(|link| link.split_once('-').unwrap()) {
+    for (left_id, right_id) in input.lines().map(|link| link.split_once('-').unwrap()) {
         caves
             .entry(left_id)
             .and_modify(|cave: &mut Cave| cave.neighbors.push(right_id))
@@ -58,13 +58,8 @@ fn count_paths<'a>(
     path_count
 }
 
-pub fn task1<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
-    let links = input.map(|line| line.unwrap()).collect::<Vec<String>>();
-    let cave_system = parse_cave_system(&links);
+pub fn task1(input: String) -> String {
+    let cave_system = parse_cave_system(&input);
     count_paths("start", &cave_system, &mut HashSet::new()).to_string()
 }
 
@@ -103,12 +98,7 @@ fn count_paths_with_duplicates<'a>(
     path_count
 }
 
-pub fn task2<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
-    let links = input.map(|line| line.unwrap()).collect::<Vec<String>>();
-    let cave_system = parse_cave_system(&links);
+pub fn task2(input: String) -> String {
+    let cave_system = parse_cave_system(&input);
     count_paths_with_duplicates("start", &cave_system, &mut HashMap::new(), 1).to_string()
 }

@@ -80,14 +80,11 @@ fn parse_parens(parens: &str) -> ParenParseResult {
     }
 }
 
-pub fn task1<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
+pub fn task1(input: String) -> String {
     input
+        .lines()
         .filter_map(|line| {
-            if let ParenParseResult::InvalidParen(paren) = parse_parens(&line.unwrap()) {
+            if let ParenParseResult::InvalidParen(paren) = parse_parens(line) {
                 Some(score_wrong_paren(paren))
             } else {
                 None
@@ -97,14 +94,11 @@ where
         .to_string()
 }
 
-pub fn task2<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
+pub fn task2(input: String) -> String {
     let mut missing_paren_scores: Vec<u64> = input
+        .lines()
         .filter_map(|line| {
-            if let ParenParseResult::RemainingStack(paren_stack) = parse_parens(&line.unwrap()) {
+            if let ParenParseResult::RemainingStack(paren_stack) = parse_parens(line) {
                 Some(
                     paren_stack
                         .iter()

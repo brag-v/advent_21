@@ -9,40 +9,30 @@ struct Board {
     marks: [[bool; WIDTH]; HEIGHT],
 }
 
-fn get_boards_and_sequence<I, E>(mut input: I) -> (Vec<Board>, Vec<u8>)
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
-    let sequence: Vec<u8> = input
-        .next()
-        .unwrap()
-        .unwrap()
+fn get_boards_and_sequence(input: String) -> (Vec<Board>, Vec<u8>) {
+    let (sequence_input, boards_input) = input.split_once("\n\n").unwrap();
+    let sequence: Vec<u8> = sequence_input
         .split(',')
         .map(|num| num.parse().unwrap())
         .collect();
 
-    let mut boards = Vec::new();
-
-    // boards are separated by empty line, which we can use to check if there are any more boards
-    while let Some(_empty_line) = input.next() {
-        let mut numbers = [[0; WIDTH]; HEIGHT];
-        input
-            .by_ref()
-            .take(HEIGHT)
-            .enumerate()
-            .for_each(|(y, line)| {
-                line.unwrap()
-                    .split_whitespace()
+    let boards = boards_input
+        .split("\n\n")
+        .map(|board| {
+            let mut numbers = [[0; WIDTH]; HEIGHT];
+            board.lines().enumerate().for_each(|(y, line)| {
+                line.split_whitespace()
+                    .inspect(|num| println!("{num}"))
                     .map(|num| num.parse().unwrap())
                     .enumerate()
                     .for_each(|(x, num)| numbers[y][x] = num);
             });
-        boards.push(Board {
-            numbers,
-            marks: [[false; WIDTH]; HEIGHT],
-        });
-    }
+            Board {
+                numbers,
+                marks: [[false; WIDTH]; HEIGHT],
+            }
+        })
+        .collect();
 
     (boards, sequence)
 }
@@ -88,11 +78,7 @@ fn board_score(board: &Board, number: u8) -> u64 {
         * u64::from(number)
 }
 
-pub fn task1<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
+pub fn task1(input: String) -> String {
     let (mut boards, sequence) = get_boards_and_sequence(input);
     for num in sequence {
         for board in &mut boards {
@@ -104,11 +90,7 @@ where
     "No winners".to_string()
 }
 
-pub fn task2<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
+pub fn task2(input: String) -> String {
     let (mut boards, sequence) = get_boards_and_sequence(input);
     let mut last_board = None;
     let mut last_num_i = 0;
