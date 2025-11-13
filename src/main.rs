@@ -10,6 +10,7 @@ mod day10;
 mod day11;
 mod day12;
 mod day13;
+mod day14;
 mod day2;
 mod day3;
 mod day4;
@@ -59,6 +60,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         ("12", "2") => day12::task2,
         ("13", "1") => day13::task1,
         ("13", "2") => day13::task2,
+        ("14", "1") => day14::task1,
+        ("14", "2") => day14::task2,
         _ => return Err(format!("Day {day} task {task} is not implemented").into()),
     };
 
@@ -70,7 +73,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let result = solver(input);
     let runtime = start_time.elapsed();
 
-    if result.contains("\n") {
+    if result.contains('\n') {
         // if result is multiline, we might not want
         // the shift on the first line from "Result: "
         println!("Result:\n{result}");

@@ -524,3 +524,55 @@ fold along x=5",
 ....."
     )
 }
+
+#[test]
+fn test_day14_task1() {
+    assert_task!(
+        day14::task1,
+        "NNCB
+
+CH -> B
+HH -> N
+CB -> H
+NH -> C
+HB -> C
+HC -> B
+HN -> C
+NN -> C
+BH -> H
+NC -> B
+NB -> B
+BN -> B
+BB -> N
+BC -> B
+CC -> N
+CN -> C",
+        "1588"
+    );
+}
+
+#[test]
+fn test_day14_task2() {
+    assert_task!(
+        day14::task2,
+        "NNCB
+
+CH -> B
+HH -> N
+CB -> H
+NH -> C
+HB -> C
+HC -> B
+HN -> C
+NN -> C
+BH -> H
+NC -> B
+NB -> B
+BN -> B
+BB -> N
+BC -> B
+CC -> N
+CN -> C",
+        "2188189693529"
+    );
+}
