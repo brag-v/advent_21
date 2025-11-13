@@ -31,10 +31,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         return Err("Please provide a task in the format <day number>.<task number>".into());
     };
 
-    let path = format!("./data/day{day}.txt");
-
-    let input = read_to_string(path)?;
-
     // Select solver for the provided task
     let solver = match (day, task) {
         ("1", "1") => day1::task1,
@@ -66,8 +62,11 @@ fn main() -> Result<(), Box<dyn Error>> {
         _ => return Err(format!("Day {day} task {task} is not implemented").into()),
     };
 
+    let path = format!("./data/day{day}.txt");
+
     // Solve task, and measure runtime
     let start_time = Instant::now();
+    let input = read_to_string(path)?;
     let result = solver(input);
     let runtime = start_time.elapsed();
 
