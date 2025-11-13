@@ -17,21 +17,11 @@ if [[ -e $path ]]; then
 	exit 2
 fi
 
-echo 'use std::fmt::Debug;
-
-pub fn task1<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
+echo 'pub fn task1(input: String) -> String {
     todo!("Task not implemented");
 }
 
-pub fn task2<I, E>(input: I) -> String
-where
-    I: Iterator<Item = Result<String, E>>,
-    E: Debug,
-{
+pub fn task2(input: String) -> String {
     todo!("Task not implemented");
 }' > $path
 
@@ -41,14 +31,14 @@ echo "
 fn test_day$1_task1() {
     assert_task!(day$1::task1,
 		\"TODO: example input\",
-    -> \"TODO: example output\");
+     	\"TODO: example output\");
 }
 
 #[test]
 fn test_day$1_task2() {
     assert_task!(day$1::task2,
 		\"TODO: example input\",
-    -> \"TODO: example output\");
+    	\"TODO: example output\");
 }
 " >> 'src/test.rs'
 
