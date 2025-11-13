@@ -69,7 +69,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // Solve task, and measure runtime
     let start_time = Instant::now();
-    let input = read_to_string(path)?;
+    let input = read_to_string(path)?.trim_end().to_owned();
     let result = solver(input);
     let runtime = start_time.elapsed();
 

@@ -25,8 +25,7 @@ fn total_number_of_fish(counter: usize, time: usize, memo: &mut [Option<u64>]) -
     count
 }
 
-fn solve_tasks(input: &str, time: usize) -> String
-{
+fn solve_tasks(input: &str, time: usize) -> String {
     let mut memo = vec![None; NEW_FISH_COUNTER * time];
     input
         .split(',')
@@ -36,12 +35,10 @@ fn solve_tasks(input: &str, time: usize) -> String
         .to_string()
 }
 
-pub fn task1(input: String) -> String
-{
+pub fn task1(input: String) -> String {
     solve_tasks(&input, 80)
 }
 
-pub fn task2(input: String) -> String
-{
+pub fn task2(input: String) -> String {
     solve_tasks(&input, 256)
 }
