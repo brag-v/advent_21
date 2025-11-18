@@ -6,9 +6,10 @@ struct Pair {
     right: u8,
 }
 
-fn get_rules_pairs_and_endpoints(
-    input: &str,
-) -> (HashMap<Pair, (Pair, Pair)>, HashMap<Pair, u64>, Pair) {
+type RuleResults = HashMap<Pair, (Pair, Pair)>;
+type PairCounts = HashMap<Pair, u64>;
+
+fn get_rules_pairs_and_endpoints(input: &str) -> (RuleResults, PairCounts, Pair) {
     let (initial_input, rules_input) = input.split_once("\n\n").unwrap();
     let mut pairs = HashMap::new();
     let bytes = initial_input.bytes().collect::<Box<[u8]>>();
@@ -43,15 +44,15 @@ fn get_rules_pairs_and_endpoints(
             };
             (in_pair, (out_pair_1, out_pair_2))
         })
-        .collect::<HashMap<Pair, (Pair, Pair)>>();
+        .collect();
 
     (rules, pairs, endpoint)
 }
 
 fn perform_pair_insertion(
-    current_counts: &mut HashMap<Pair, u64>,
-    next_counts: &mut HashMap<Pair, u64>,
-    rules: &HashMap<Pair, (Pair, Pair)>,
+    current_counts: &mut PairCounts,
+    next_counts: &mut PairCounts,
+    rules: &RuleResults,
 ) {
     for (pair, count) in current_counts.iter_mut() {
         let (pair1, pair2) = rules.get(pair).unwrap();
@@ -61,7 +62,7 @@ fn perform_pair_insertion(
     }
 }
 
-fn get_letter_counts(pairs: &HashMap<Pair, u64>, endpints: Pair) -> HashMap<u8, u64> {
+fn get_letter_counts(pairs: &PairCounts, endpints: Pair) -> HashMap<u8, u64> {
     let mut letter_counts: HashMap<u8, u64> = HashMap::new();
     for (pair, count) in pairs.iter() {
         *letter_counts.entry(pair.left).or_insert(0) += *count;
