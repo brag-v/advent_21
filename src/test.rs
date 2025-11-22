@@ -604,7 +604,9 @@ fn test_day15_task1() {
 
 #[test]
 fn test_day15_task2() {
-    assert_task!(day15::task2, "1163751742
+    assert_task!(
+        day15::task2,
+        "1163751742
 1381373672
 2136511328
 3694931569
@@ -613,5 +615,27 @@ fn test_day15_task2() {
 1359912421
 3125421639
 1293138521
-2311944581", "315");
+2311944581",
+        "315"
+    );
+}
+
+#[test]
+fn test_day16_task1() {
+    assert_task!(day16::task1, "8A004A801A8002F478", "16");
+    assert_task!(day16::task1, "620080001611562C8802118E34", "12");
+    assert_task!(day16::task1, "C0015000016115A2E0802F182340", "23");
+    assert_task!(day16::task1, "A0016C880162017C3686B18A3D4780", "31");
+}
+
+#[test]
+fn test_day16_task2() {
+    assert_task!(day16::task2, "C200B40A82", "3");
+    assert_task!(day16::task2, "04005AC33890", "54");
+    assert_task!(day16::task2, "880086C3E88112", "7");
+    assert_task!(day16::task2, "CE00C43D881120", "9");
+    assert_task!(day16::task2, "D8005AC2A8F0", "1");
+    assert_task!(day16::task2, "F600BC2D8F", "0");
+    assert_task!(day16::task2, "9C005AC2F8F0", "0");
+    assert_task!(day16::task2, "9C0141080250320F1802104A08", "1");
 }
