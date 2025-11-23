@@ -639,3 +639,13 @@ fn test_day16_task2() {
     assert_task!(day16::task2, "9C005AC2F8F0", "0");
     assert_task!(day16::task2, "9C0141080250320F1802104A08", "1");
 }
+
+#[test]
+fn test_day17_task1() {
+    assert_task!(day17::task1, "target area: x=20..30, y=-10..-5", "45");
+}
+
+#[test]
+fn test_day17_task2() {
+    assert_task!(day17::task2, "target area: x=20..30, y=-10..-5", "112");
+}
