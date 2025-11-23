@@ -1,5 +1,7 @@
 use itertools::Itertools;
 
+// TODO: use bitvec instead of &[bool]
+
 struct PacketEval {
     version_sum: usize,
     value: usize,
@@ -41,11 +43,7 @@ fn type_4_body(packet: &[bool]) -> (usize, usize) {
     (value, len)
 }
 
-pub fn task1(input: String) -> String {
-    let binary_packet: Box<[bool]> = input.bytes().flat_map(to_binary_array).collect();
-    evaluate_packet(&binary_packet).version_sum.to_string()
-}
-
+// TODO: gross amounts of indends?
 fn evaluate_packet(packet: &[bool]) -> PacketEval {
     let version = to_value(&packet[0..3]);
     let id = to_value(&packet[3..6]);
@@ -58,9 +56,10 @@ fn evaluate_packet(packet: &[bool]) -> PacketEval {
                 length: body_length + 6,
             }
         }
-        _ => {
+        0..=3 | 5..=7 => {
             let mut sub_packets = Vec::new();
             let mut length;
+            // evaluate sub packets
             match packet[6] {
                 false => {
                     length = 22;
@@ -82,6 +81,7 @@ fn evaluate_packet(packet: &[bool]) -> PacketEval {
                     }
                 }
             }
+            // evaluate current packet
             let version_sum = version
                 + sub_packets
                     .iter()
@@ -104,7 +104,7 @@ fn evaluate_packet(packet: &[bool]) -> PacketEval {
                     debug_assert_eq!(sub_packets.len(), 2);
                     (sub_packets[0].value == sub_packets[1].value) as usize
                 }
-                _ => panic!(),
+                _ => unreachable!(),
             };
             PacketEval {
                 version_sum,
@@ -112,7 +112,13 @@ fn evaluate_packet(packet: &[bool]) -> PacketEval {
                 length,
             }
         }
+        _ => panic!(),
     }
+}
+
+pub fn task1(input: String) -> String {
+    let binary_packet: Box<[bool]> = input.bytes().flat_map(to_binary_array).collect();
+    evaluate_packet(&binary_packet).version_sum.to_string()
 }
 
 pub fn task2(input: String) -> String {
