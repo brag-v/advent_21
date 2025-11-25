@@ -132,13 +132,10 @@ pub fn task2(input: String) -> String {
 
     // work harder:
     // assume target area below y = 0
-    // try all velocities in the box:
-    // 0,-(bottom - 1)  .. right,-(bottom - 1)
-    //      ..          ..      ..
-    //    0,bottom      .. right,bottom
     let mut total = 0;
+    let mut min_x = 1;
     for initial_y_velocity in target_area.bottom..=(-target_area.bottom - 1) {
-        for initial_x_velocity in 0..=target_area.right {
+        for initial_x_velocity in min_x..=target_area.right {
             let mut x_vel = initial_x_velocity;
             let mut y_vel = initial_y_velocity;
             let mut x_pos = 0;
@@ -154,6 +151,7 @@ pub fn task2(input: String) -> String {
                 }
                 if x_vel == 0 {
                     if x_pos < target_area.left {
+                        min_x = initial_x_velocity;
                         break;
                     }
                 } else {

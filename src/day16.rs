@@ -26,7 +26,7 @@ fn to_binary_array(byte: u8) -> [bool; 4] {
 fn to_value<'a>(binary_sequence: impl IntoIterator<Item = &'a bool>) -> usize {
     binary_sequence
         .into_iter()
-        .fold(0, |acc, bit| acc * 2 + *bit as usize)
+        .fold(0, |acc, bit| acc * 2 + usize::from(*bit))
 }
 
 fn type_4_body(packet: &[bool]) -> (usize, usize) {
@@ -60,26 +60,23 @@ fn evaluate_packet(packet: &[bool]) -> PacketEval {
             let mut sub_packets = Vec::new();
             let mut length;
             // evaluate sub packets
-            match packet[6] {
-                false => {
-                    length = 22;
-                    let final_length = to_value(&packet[7..length]) + length;
-                    while length < final_length {
-                        let sub_packet = evaluate_packet(&packet[length..]);
-                        length += sub_packet.length;
-                        sub_packets.push(sub_packet);
-                    }
-                    debug_assert_eq!(length, final_length);
+            if packet[6] {
+                length = 18;
+                let remaining_packets = to_value(&packet[7..length]);
+                for _ in 0..remaining_packets {
+                    let sub_packet = evaluate_packet(&packet[length..]);
+                    length += sub_packet.length;
+                    sub_packets.push(sub_packet);
                 }
-                true => {
-                    length = 18;
-                    let remaining_packets = to_value(&packet[7..length]);
-                    for _ in 0..remaining_packets {
-                        let sub_packet = evaluate_packet(&packet[length..]);
-                        length += sub_packet.length;
-                        sub_packets.push(sub_packet);
-                    }
+            } else {
+                length = 22;
+                let final_length = to_value(&packet[7..length]) + length;
+                while length < final_length {
+                    let sub_packet = evaluate_packet(&packet[length..]);
+                    length += sub_packet.length;
+                    sub_packets.push(sub_packet);
                 }
+                debug_assert_eq!(length, final_length);
             }
             // evaluate current packet
             let version_sum = version
@@ -94,15 +91,15 @@ fn evaluate_packet(packet: &[bool]) -> PacketEval {
                 3 => sub_packets.iter().map(|packet| packet.value).max().unwrap(),
                 5 => {
                     debug_assert_eq!(sub_packets.len(), 2);
-                    (sub_packets[0].value > sub_packets[1].value) as usize
+                    usize::from(sub_packets[0].value > sub_packets[1].value)
                 }
                 6 => {
                     debug_assert_eq!(sub_packets.len(), 2);
-                    (sub_packets[0].value < sub_packets[1].value) as usize
+                    usize::from(sub_packets[0].value < sub_packets[1].value)
                 }
                 7 => {
                     debug_assert_eq!(sub_packets.len(), 2);
-                    (sub_packets[0].value == sub_packets[1].value) as usize
+                    usize::from(sub_packets[0].value == sub_packets[1].value)
                 }
                 _ => unreachable!(),
             };

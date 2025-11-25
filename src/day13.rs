@@ -16,9 +16,9 @@ struct Fold {
 
 fn get_coords_and_folds(input: &str) -> (Vec<Coord>, Vec<Fold>) {
     let (coord_input, fold_input) = input.split_once("\n\n").unwrap();
-    let coords = coord_input.split("\n").map(Coord::from).collect();
+    let coords = coord_input.split('\n').map(Coord::from).collect();
     let folds = fold_input
-        .split("\n")
+        .split('\n')
         .map(|line| {
             line.strip_prefix("fold along ")
                 .unwrap()
@@ -41,12 +41,12 @@ fn fold_coord(fold: &Fold, coord: &mut Coord) {
     match fold.axis {
         Vertical => {
             if coord.x > fold.distance {
-                coord.x = 2 * fold.distance - coord.x
+                coord.x = 2 * fold.distance - coord.x;
             }
         }
         Horizontal => {
             if coord.y > fold.distance {
-                coord.y = 2 * fold.distance - coord.y
+                coord.y = 2 * fold.distance - coord.y;
             }
         }
     }
@@ -75,7 +75,7 @@ pub fn task2(input: String) -> String {
     let mut height = usize::MAX;
     // TODO: remove duplicates during folding?
     for fold in folds {
-        for coord in coords.iter_mut() {
+        for coord in &mut coords {
             fold_coord(&fold, coord);
         }
         match fold.axis {
