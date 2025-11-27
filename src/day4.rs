@@ -9,7 +9,7 @@ struct Board {
     marks: [[bool; WIDTH]; HEIGHT],
 }
 
-fn get_boards_and_sequence(input: String) -> (Vec<Board>, Vec<u8>) {
+fn get_boards_and_sequence(input: &str) -> (Vec<Board>, Vec<u8>) {
     let (sequence_input, boards_input) = input.split_once("\n\n").unwrap();
     let sequence: Vec<u8> = sequence_input
         .split(',')
@@ -78,7 +78,7 @@ fn board_score(board: &Board, number: u8) -> u64 {
         * u64::from(number)
 }
 
-pub fn task1(input: String) -> String {
+pub fn task1(input: &str) -> String {
     let (mut boards, sequence) = get_boards_and_sequence(input);
     for num in sequence {
         for board in &mut boards {
@@ -90,7 +90,7 @@ pub fn task1(input: String) -> String {
     "No winners".to_string()
 }
 
-pub fn task2(input: String) -> String {
+pub fn task2(input: &str) -> String {
     let (mut boards, sequence) = get_boards_and_sequence(input);
     let mut last_board = None;
     let mut last_num_i = 0;

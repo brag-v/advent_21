@@ -26,8 +26,8 @@ fn find_low_points(map: &[Vec<u8>]) -> Vec<Coord> {
         .collect()
 }
 
-pub fn task1(input: String) -> String {
-    let map = parse_map(&input);
+pub fn task1(input: &str) -> String {
+    let map = parse_map(input);
     find_low_points(&map)
         .iter()
         .map(|pos| u64::from(map[pos.y][pos.x] + 1))
@@ -79,8 +79,8 @@ fn top_three_basins(basin_map: &mut [Vec<BasinTile>], height_map: &[Vec<u8>]) ->
     top_three
 }
 
-pub fn task2(input: String) -> String {
-    let height_map = parse_map(&input);
+pub fn task2(input: &str) -> String {
+    let height_map = parse_map(input);
     let mut basin_map = vec![vec![BasinTile::None; height_map[0].len()]; height_map.len()];
     for src in find_low_points(&height_map) {
         basin_map[src.y][src.x] = BasinTile::Source;

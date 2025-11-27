@@ -6,7 +6,7 @@ enum Octopus {
     Flashing,
 }
 
-fn parse_map(input: String) -> Vec<Vec<Octopus>> {
+fn parse_map(input: &str) -> Vec<Vec<Octopus>> {
     input
         .lines()
         .map(|line| {
@@ -51,7 +51,7 @@ fn time_step(map: &mut [Vec<Octopus>]) -> u64 {
     flash_count
 }
 
-pub fn task1(input: String) -> String {
+pub fn task1(input: &str) -> String {
     let mut map = parse_map(input);
     let mut flash_count = 0;
     for _time_step in 0..100 {
@@ -60,7 +60,7 @@ pub fn task1(input: String) -> String {
     flash_count.to_string()
 }
 
-pub fn task2(input: String) -> String {
+pub fn task2(input: &str) -> String {
     let mut map = parse_map(input);
     let desired_flash_count = (map.len() * map[0].len()) as u64;
     let mut i = 0;

@@ -52,10 +52,10 @@ fn fold_coord(fold: &Fold, coord: &mut Coord) {
     }
 }
 
-pub fn task1(input: String) -> String {
-    let (mut coords, folds) = get_coords_and_folds(&input);
+pub fn task1(input: &str) -> String {
+    let (mut coords, folds) = get_coords_and_folds(input);
 
-    for coord in coords.iter_mut() {
+    for coord in &mut coords {
         fold_coord(&folds[0], coord);
     }
 
@@ -68,8 +68,8 @@ pub fn task1(input: String) -> String {
     coords.len().to_string()
 }
 
-pub fn task2(input: String) -> String {
-    let (mut coords, folds) = get_coords_and_folds(&input);
+pub fn task2(input: &str) -> String {
+    let (mut coords, folds) = get_coords_and_folds(input);
 
     let mut width = usize::MAX;
     let mut height = usize::MAX;

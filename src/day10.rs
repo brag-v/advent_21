@@ -80,7 +80,7 @@ fn parse_parens(parens: &str) -> ParenParseResult {
     }
 }
 
-pub fn task1(input: String) -> String {
+pub fn task1(input: &str) -> String {
     input
         .lines()
         .filter_map(|line| {
@@ -94,7 +94,7 @@ pub fn task1(input: String) -> String {
         .to_string()
 }
 
-pub fn task2(input: String) -> String {
+pub fn task2(input: &str) -> String {
     let mut missing_paren_scores: Vec<u64> = input
         .lines()
         .filter_map(|line| {

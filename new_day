@@ -17,11 +17,11 @@ if [[ -e $path ]]; then
 	exit 2
 fi
 
-echo 'pub fn task1(input: String) -> String {
+echo 'pub fn task1(input: &str) -> String {
     todo!("Task not implemented");
 }
 
-pub fn task2(input: String) -> String {
+pub fn task2(input: &str) -> String {
     todo!("Task not implemented");
 }' > $path
 

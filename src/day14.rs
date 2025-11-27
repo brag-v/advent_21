@@ -77,11 +77,11 @@ fn get_letter_counts(pairs: &PairCounts, endpints: Pair) -> HashMap<u8, u64> {
     letter_counts
 }
 
-fn perform_tasks(input: String, steps: usize) -> String {
+fn perform_tasks(input: &str, steps: usize) -> String {
     // TODO: using all possible pairs as entries, pair count can be encoded in a vector and rules
     // in a matrix, using tricks like repeaded squaring of the rule matrix.
     // However, the running time is quite low already, even in task 2
-    let (rules, mut initial_pairs, endpoints) = get_rules_pairs_and_endpoints(&input);
+    let (rules, mut initial_pairs, endpoints) = get_rules_pairs_and_endpoints(input);
     let mut current = &mut initial_pairs;
     let mut next = &mut HashMap::new();
     for _ in 0..steps {
@@ -94,10 +94,10 @@ fn perform_tasks(input: String, steps: usize) -> String {
     (max_freq - min_freq).to_string()
 }
 
-pub fn task1(input: String) -> String {
+pub fn task1(input: &str) -> String {
     perform_tasks(input, 10)
 }
 
-pub fn task2(input: String) -> String {
+pub fn task2(input: &str) -> String {
     perform_tasks(input, 40)
 }

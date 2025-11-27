@@ -63,12 +63,12 @@ fn min_path_cost(map: &Map<u8>) -> u32 {
     costs[goal].unwrap().cost
 }
 
-pub fn task1(input: String) -> String {
-    let map = Map::try_from_str(&input, |num| num.to_digit(10).unwrap() as u8).unwrap();
+pub fn task1(input: &str) -> String {
+    let map = Map::try_from_str(input, |num| num.to_digit(10).unwrap() as u8).unwrap();
     min_path_cost(&map).to_string()
 }
 
-pub fn task2(input: String) -> String {
+pub fn task2(input: &str) -> String {
     let growth = 5;
     let small_map = Map::try_from_str(&input, |num| num.to_digit(10).unwrap() as u8).unwrap();
     let mut big_map = vec![0; small_map.height() * small_map.width() * growth * growth];

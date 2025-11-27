@@ -77,8 +77,8 @@ fn count_overlaps(map: &[Vec<u8>]) -> usize {
         .count()
 }
 
-pub fn task1(input: String) -> String {
-    let lines: Vec<Line> = get_lines(&input).filter(Line::is_straight).collect();
+pub fn task1(input: &str) -> String {
+    let lines: Vec<Line> = get_lines(input).filter(Line::is_straight).collect();
     let (width, height) = find_map_dimention(&lines);
     let mut map: Vec<Vec<u8>> = vec![vec![0; width]; height];
     for line in lines {
@@ -87,8 +87,8 @@ pub fn task1(input: String) -> String {
     count_overlaps(&map).to_string()
 }
 
-pub fn task2(input: String) -> String {
-    let lines: Vec<Line> = get_lines(&input).collect();
+pub fn task2(input: &str) -> String {
+    let lines: Vec<Line> = get_lines(input).collect();
     let (width, height) = find_map_dimention(&lines);
     let mut map: Vec<Vec<u8>> = vec![vec![0; width]; height];
     for line in lines {

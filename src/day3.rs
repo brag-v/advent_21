@@ -1,5 +1,5 @@
 /// Finds the total number of 1s by position in the input, as well as the length of the input
-fn count_numbers(input: String) -> (Vec<u32>, u32) {
+fn count_numbers(input: &str) -> (Vec<u32>, u32) {
     let measure_length = input.lines().next().unwrap().len();
     let mut counts = vec![0; measure_length];
     let mut length = 0;
@@ -14,7 +14,7 @@ fn count_numbers(input: String) -> (Vec<u32>, u32) {
     (counts, length)
 }
 
-pub fn task1(input: String) -> String {
+pub fn task1(input: &str) -> String {
     let (counts, length) = count_numbers(input);
     let cutoff = length / 2;
     let number_lengths = counts.len();
@@ -62,7 +62,7 @@ fn find_rating(mut measurements: Vec<&[u8]>, keep_majority: bool) -> u64 {
         .fold(0, |acc, bit| acc * 2 + u64::from(*bit == b'1'))
 }
 
-pub fn task2(input: String) -> String {
+pub fn task2(input: &str) -> String {
     let measurements: Vec<&[u8]> = input.lines().map(|line| line.as_bytes()).collect();
     let (zeros, ones) = split_list(measurements, 0);
     let (majority, minority) = if zeros.len() > ones.len() {

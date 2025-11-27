@@ -35,10 +35,10 @@ fn solve_tasks(input: &str, time: usize) -> String {
         .to_string()
 }
 
-pub fn task1(input: String) -> String {
-    solve_tasks(&input, 80)
+pub fn task1(input: &str) -> String {
+    solve_tasks(input, 80)
 }
 
-pub fn task2(input: String) -> String {
-    solve_tasks(&input, 256)
+pub fn task2(input: &str) -> String {
+    solve_tasks(input, 256)
 }

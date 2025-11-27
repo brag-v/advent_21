@@ -1,4 +1,4 @@
-pub fn task1(input: String) -> String {
+pub fn task1(input: &str) -> String {
     let mut prev = None;
     let mut count = 0;
     for line in input.lines() {
@@ -13,7 +13,7 @@ pub fn task1(input: String) -> String {
     count.to_string()
 }
 
-pub fn task2(input: String) -> String {
+pub fn task2(input: &str) -> String {
     let mut window = [None, None, None];
     let mut count = 0;
     for (i, line) in input.lines().enumerate() {

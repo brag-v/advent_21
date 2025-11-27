@@ -40,8 +40,8 @@ const fn highest_hit(target_area: &Area) -> Option<i32> {
     }
 }
 
-pub fn task1(input: String) -> String {
-    let target_area = parse_target_area(&input);
+pub fn task1(input: &str) -> String {
+    let target_area = parse_target_area(input);
     highest_hit(&target_area).unwrap().to_string()
 }
 
@@ -107,8 +107,8 @@ fn get_y_velocities(target_area: &Area) -> Vec<usize> {
     time_counts
 }
 
-pub fn task2(input: String) -> String {
-    let target_area = parse_target_area(&input);
+pub fn task2(input: &str) -> String {
+    let target_area = parse_target_area(input);
 
     // TODO: figure out how to work smarter
     // method kind of worked at some point: it found all possible ways to reach inside the target

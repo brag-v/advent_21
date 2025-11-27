@@ -156,7 +156,7 @@ impl SnailNumber {
     }
 }
 
-pub fn task1(input: String) -> String {
+pub fn task1(input: &str) -> String {
     input
         .lines()
         .map(|line| SnailNumber::try_from(line).unwrap())
@@ -166,7 +166,7 @@ pub fn task1(input: String) -> String {
         .to_string()
 }
 
-pub fn task2(input: String) -> String {
+pub fn task2(input: &str) -> String {
     let snail_numbers: Vec<SnailNumber> = input
         .lines()
         .map(|line| SnailNumber::try_from(line).unwrap())

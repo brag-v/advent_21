@@ -58,8 +58,8 @@ fn count_paths<'a>(
     path_count
 }
 
-pub fn task1(input: String) -> String {
-    let cave_system = parse_cave_system(&input);
+pub fn task1(input: &str) -> String {
+    let cave_system = parse_cave_system(input);
     count_paths("start", &cave_system, &mut HashSet::new()).to_string()
 }
 
@@ -98,7 +98,7 @@ fn count_paths_with_duplicates<'a>(
     path_count
 }
 
-pub fn task2(input: String) -> String {
-    let cave_system = parse_cave_system(&input);
+pub fn task2(input: &str) -> String {
+    let cave_system = parse_cave_system(input);
     count_paths_with_duplicates("start", &cave_system, &mut HashMap::new(), 1).to_string()
 }

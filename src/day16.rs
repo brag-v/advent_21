@@ -113,12 +113,12 @@ fn evaluate_packet(packet: &[bool]) -> PacketEval {
     }
 }
 
-pub fn task1(input: String) -> String {
+pub fn task1(input: &str) -> String {
     let binary_packet: Box<[bool]> = input.bytes().flat_map(to_binary_array).collect();
     evaluate_packet(&binary_packet).version_sum.to_string()
 }
 
-pub fn task2(input: String) -> String {
+pub fn task2(input: &str) -> String {
     let binary_packet: Box<[bool]> = input.bytes().flat_map(to_binary_array).collect();
     evaluate_packet(&binary_packet).value.to_string()
 }

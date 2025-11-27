@@ -1,4 +1,4 @@
-pub fn task1(input: String) -> String
+pub fn task1(input: &str) -> String
 {
     let mut x: i32 = 0;
     let mut y: i32 = 0;
@@ -16,7 +16,7 @@ pub fn task1(input: String) -> String
     (x.abs() * y.abs()).to_string()
 }
 
-pub fn task2(input: String) -> String
+pub fn task2(input: &str) -> String
 {
     let mut x: i32 = 0;
     let mut y: i32 = 0;

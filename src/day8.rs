@@ -18,8 +18,8 @@ fn count_identifiable_digits(signal: &[String]) -> usize {
         .count()
 }
 
-pub fn task1(input: String) -> String {
-    let entries = parse_input(&input);
+pub fn task1(input: &str) -> String {
+    let entries = parse_input(input);
     entries
         .iter()
         .map(|(_signal, output)| count_identifiable_digits(output))
@@ -129,8 +129,8 @@ fn gather_identifiable_digits<'a>(
     (one, seven, four)
 }
 
-pub fn task2(input: String) -> String {
-    let entries = parse_input(&input);
+pub fn task2(input: &str) -> String {
+    let entries = parse_input(input);
     let mut sum = 0;
     for (signal, output) in entries {
         let (one, seven, four) = gather_identifiable_digits(&signal, &output);

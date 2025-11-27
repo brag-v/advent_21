@@ -1,6 +1,6 @@
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 
-pub fn task1(input: String) -> String {
+pub fn task1(input: &str) -> String {
     let positions: Vec<u32> = input.split(',').map(|num| num.parse().unwrap()).collect();
 
     // minimum position will be at one of the crab's positions
@@ -17,7 +17,7 @@ fn triangle_num(n: u32) -> u32 {
     n * (n + 1) / 2
 }
 
-pub fn task2(input: String) -> String {
+pub fn task2(input: &str) -> String {
     let positions: Vec<u32> = input.split(',').map(|num| num.parse().unwrap()).collect();
     let start = positions.iter().min().unwrap();
     let end = positions.iter().max().unwrap();
