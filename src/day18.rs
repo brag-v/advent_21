@@ -46,10 +46,12 @@ pub struct InvalidSnailNumber {}
 impl TryFrom<&str> for SnailNumber {
     type Error = InvalidSnailNumber;
 
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
+    fn try_from(value: &str) -> Result<Self, InvalidSnailNumber> {
         let mut number_stack = vec![];
         for symbol in value.bytes() {
             match symbol {
+                // We don't check for matching parenthesis,
+                // or that the pairs are comma separated.
                 b'[' | b',' => (),
                 b'0'..=b'9' => {
                     number_stack.push(SnailNumber::Regular(symbol - b'0'));
@@ -61,8 +63,8 @@ impl TryFrom<&str> for SnailNumber {
                         return Err(InvalidSnailNumber {});
                     }
                 }
-                _ => panic!(),
-            };
+                _ => return Err(InvalidSnailNumber {}),
+            }
         }
         match number_stack.pop() {
             Some(top) => Ok(top),
@@ -93,7 +95,7 @@ impl SnailNumber {
         }
     }
 
-    fn split_big(&mut self, depth: u8) -> bool {
+    fn split_big(&mut self, max_depth: u8) -> bool {
         match self {
             SnailNumber::Regular(num) => {
                 if *num >= 10 {
@@ -101,42 +103,44 @@ impl SnailNumber {
                         left: SnailNumber::Regular(*num / 2),
                         right: SnailNumber::Regular(*num / 2 + *num % 2),
                     }));
-                    depth >= 3
+                    max_depth == 0
                 } else {
                     false
                 }
             }
             SnailNumber::Pair(snail_pair) => {
-                // relies on short-circuiting of boolean expressions
-                snail_pair.left.split_big(depth + 1) || snail_pair.right.split_big(depth + 1)
+                assert!(
+                    max_depth > 0,
+                    "Encountered snail number exceeding maximum nesting depth while trying to split big regular numbers"
+                );
+                // relies on short-circuiting of boolean expressions for correctness
+                snail_pair.left.split_big(max_depth - 1)
+                    || snail_pair.right.split_big(max_depth - 1)
             }
         }
     }
 
-    fn explode_deep(&mut self, depth: u8) -> (u8, u8) {
+    fn explode_deep(&mut self, max_depth: u8) -> (u8, u8) {
         if let SnailNumber::Pair(pair) = self {
-            if depth >= 4 {
+            if max_depth == 0 {
                 if let (SnailNumber::Regular(left), SnailNumber::Regular(right)) =
                     (&pair.left, &pair.right)
                 {
                     let explotion = (*left, *right);
                     *self = SnailNumber::Regular(0);
                     return explotion;
-                } else {
-                    panic!("Encountered {self} nested {depth} deep");
                 }
+                panic!("Unable to explode non-simple pair, {self}, nested below maximum depth");
             }
-            let (left_left, mut left_right) = pair.left.explode_deep(depth + 1);
-            if left_right > 0 {
-                pair.right.add_to_leftmost(left_right);
-                left_right = 0;
+            let (outer_left, inner_right) = pair.left.explode_deep(max_depth - 1);
+            if inner_right > 0 {
+                pair.right.add_to_leftmost(inner_right);
             }
-            let (mut right_left, right_right) = pair.right.explode_deep(depth + 1);
-            if right_left > 0 {
-                pair.left.add_to_rightmost(right_left);
-                right_left = 0;
+            let (inner_left, outer_right) = pair.right.explode_deep(max_depth - 1);
+            if inner_left > 0 {
+                pair.left.add_to_rightmost(inner_left);
             }
-            (left_left + right_left, left_right + right_right)
+            (outer_left, outer_right)
         } else {
             (0, 0)
         }
@@ -144,8 +148,8 @@ impl SnailNumber {
 
     fn reduce(mut self) -> Self {
         loop {
-            self.explode_deep(0);
-            if !self.split_big(0) {
+            self.explode_deep(4);
+            if !self.split_big(4) {
                 return self;
             }
         }
@@ -156,7 +160,7 @@ pub fn task1(input: String) -> String {
     input
         .lines()
         .map(|line| SnailNumber::try_from(line).unwrap())
-        .reduce(|a, b| a + b)
+        .reduce(|acc, num| acc + num)
         .unwrap()
         .magnitude()
         .to_string()
