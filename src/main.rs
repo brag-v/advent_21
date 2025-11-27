@@ -14,6 +14,7 @@ mod day14;
 mod day15;
 mod day16;
 mod day17;
+mod day18;
 mod day2;
 mod day3;
 mod day4;
@@ -71,6 +72,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         ("16", "2") => day16::task2,
         ("17", "1") => day17::task1,
         ("17", "2") => day17::task2,
+        ("18", "1") => day18::task1,
+        ("18", "2") => day18::task2,
         _ => return Err(format!("Day {day} task {task} is not implemented").into()),
     };
 
